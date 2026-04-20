@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block titulo %}Proyectos — {{ sitio.nombre_sitio }}{% endblock %}
+
+{% block contenido %}
+<section class="seccion-proyectos">
+<h2>Proyectos</h2>
+
+<!-- Filtros con HTMX -->
+<div class="filtros">
+    <a hx-get="{% url 'lista_proyectos' %}"
+       hx-target="#proyectos-grid"
+       hx-swap="innerHTML"
+       class="{% if not tipo_actual and not categoria_actual %}active{% endif %}">
+        Todos
+    </a>
+    <a hx-get="{% url 'lista_proyectos' %}?tipo=foto"
+       hx-target="#proyectos-grid"
+       hx-swap="innerHTML"
+       class="{% if tipo_actual == 'foto' %}active{% endif %}">
+        Fotografía
+    </a>
+    <a hx-get="{% url 'lista_proyectos' %}?tipo=video"
+       hx-target="#proyectos-grid"
+       hx-swap="innerHTML"
+       class="{% if tipo_actual == 'video' %}active{% endif %}">
+        Video
+    </a>
+    {% for cat in categorias %}
+    <a hx-get="{% url 'lista_proyectos' %}?categoria={{ cat.slug }}"
+       hx-target="#proyectos-grid"
+       hx-swap="innerHTML"
+       class="{% if categoria_actual == cat.slug %}active{% endif %}">
+        {{ cat.nombre }}
+    </a>
+    {% endfor %}
+</div>
+
+<div id="proyectos-grid">
+    {% include "galeria/parciales/_grid_proyectos.html" %}
+</div>
+</section>
+{% endblock %}

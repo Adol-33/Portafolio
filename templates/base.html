@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}{{ sitio.nombre_sitio }}{% endblock %}</title>
+
+    <!-- SEO Meta Tags -->
+    {% block meta_description %}
+    <meta name="description" content="{{ sitio.meta_description|default:sitio.subtitulo }}">
+    {% endblock %}
+    {% if sitio.meta_keywords %}
+    <meta name="keywords" content="{{ sitio.meta_keywords }}">
+    {% endif %}
+    <meta name="author" content="{{ sitio.nombre_propietario }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ sitio.nombre_sitio }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ sitio.meta_description|default:sitio.subtitulo }}{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    {% if sitio.logo %}
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ sitio.logo.url }}">
+    {% endif %}
+    <meta property="og:site_name" content="{{ sitio.nombre_sitio }}">
+    <meta property="og:locale" content="es_ES">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block tw_title %}{{ sitio.nombre_sitio }}{% endblock %}">
+    <meta name="twitter:description" content="{% block tw_description %}{{ sitio.meta_description|default:sitio.subtitulo }}{% endblock %}">
+    {% if sitio.logo %}
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ sitio.logo.url }}">
+    {% endif %}
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <a href="{% url 'inicio' %}" class="logo">
+            {% if sitio.logo %}
+            <img src="{{ sitio.logo.url }}" alt="{{ sitio.nombre_propietario }}" style="height: 32px;">
+            {% else %}
+            {{ sitio.nombre_propietario|upper }}
+            {% endif %}
+        </a>
+        <button class="nav-toggle" onclick="this.parentElement.classList.toggle('open')" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="links">
+            <a href="{% url 'inicio' %}">Home</a>
+            <a href="{% url 'lista_proyectos' %}">Projects</a>
+            <a href="{% url 'sobre_mi' %}">About Me</a>
+            <a href="{% url 'contacto' %}">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Barra de redes sociales fija -->
+    {% if sitio.instagram or sitio.facebook or sitio.twitter or sitio.linkedin or sitio.pinterest %}
+    <div class="social-bar">
+        {% if sitio.twitter %}
+        <a href="{{ sitio.twitter }}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i></a>
+        {% endif %}
+        {% if sitio.linkedin %}
+        <a href="{{ sitio.linkedin }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
+        {% endif %}
+        {% if sitio.instagram %}
+        <a href="{{ sitio.instagram }}" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a>
+        {% endif %}
+        {% if sitio.facebook %}
+        <a href="{{ sitio.facebook }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i></a>
+        {% endif %}
+        {% if sitio.pinterest %}
+        <a href="{{ sitio.pinterest }}" target="_blank" rel="noopener"><i class="fa-brands fa-pinterest-p"></i></a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <main>
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <!-- Contenedor para modales HTMX -->
+    <div id="modal-container"></div>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Contacto rápido -->
+        <div class="footer-contacto">
+            {% if sitio.email_contacto %}
+            <a href="{% url 'contacto' %}">
+                <i class="fa-regular fa-envelope"></i>
+                Contacto
+            </a>
+            {% endif %}
+            {% if sitio.whatsapp %}
+            <a href="https://wa.me/{{ sitio.whatsapp }}" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i>
+                WhatsApp
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="footer-content">
+            <p class="footer-nombre">{{ sitio.nombre_propietario|default:'Miguel Acosta' }}</p>
+            <p class="footer-rol">{{ sitio.rol|default:'Audiovisual Creator' }}</p>
+            <div class="footer-links">
+                <a href="{% url 'inicio' %}">Home</a>
+                <a href="{% url 'lista_proyectos' %}">Projects</a>
+                <a href="{% url 'sobre_mi' %}">About Me</a>
+                <a href="{% url 'contacto' %}">Contact</a>
+            </div>
+            <p class="footer-copy">&copy; 2025 - 2026 {{ sitio.nombre_propietario|default:'Tropic Visual' }}. All rights reserved. Created by <a id="adolfo-antequera" href="#" target="_blank" rel="noopener">Adolfo Antequera</a></p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

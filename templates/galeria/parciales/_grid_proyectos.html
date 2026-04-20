@@ -1,0 +1,19 @@
+<div class="grid">
+    {% for proyecto in proyectos %}
+    <div class="card"
+         hx-get="{% url 'detalle_proyecto' proyecto.slug %}"
+         hx-target="#modal-container"
+         hx-swap="innerHTML">
+        {% if proyecto.imagen_portada %}
+        <div class="info">
+            <h3>{{ proyecto.titulo }}</h3>
+            <span class="badge">{{ proyecto.get_tipo_display }}</span>
+            <span>{{ proyecto.fecha|date:"M Y" }}</span>
+        </div>
+        <img src="{{ proyecto.imagen_portada.url }}" alt="{{ proyecto.titulo }}" loading="lazy">
+        {% endif %}
+    </div>
+    {% empty %}
+    <p style="color: var(--text-muted);">No hay proyectos en esta categoría.</p>
+    {% endfor %}
+</div>

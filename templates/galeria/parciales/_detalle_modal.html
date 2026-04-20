@@ -1,0 +1,40 @@
+<div class="modal-overlay" onclick="if(event.target===this) this.remove()">
+    <div class="modal-content">
+        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">&times;</button>
+
+        <h2>{{ proyecto.titulo }}</h2>
+        <p>
+            <span class="badge">{{ proyecto.get_tipo_display }}</span>
+            {% if proyecto.categoria %}
+            <span class="badge" style="background: var(--text-muted);">{{ proyecto.categoria.nombre }}</span>
+            {% endif %}
+            &mdash; {{ proyecto.fecha|date:"d M Y" }}
+        </p>
+
+        {% if proyecto.descripcion %}
+        <p style="margin-top: 1rem; color: var(--text-muted);">{{ proyecto.descripcion }}</p>
+        {% endif %}
+
+        <div class="media-gallery">
+            {% for item in proyecto.media_items.all %}
+                {% if item.tipo == 'imagen' and item.archivo %}
+                    <img src="{{ item.archivo.url }}" alt="{{ item.titulo }}" loading="lazy">
+                {% elif item.tipo == 'video' and item.archivo %}
+                    <video controls>
+                        <source src="{{ item.archivo.url }}">
+                    </video>
+                {% elif item.tipo == 'video_url' and item.url_externa %}
+                    <iframe src="{{ item.embed_url }}"
+                            allowfullscreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            frameborder="0"></iframe>
+                {% endif %}
+            {% empty %}
+                {% if proyecto.imagen_portada %}
+                <img src="{{ proyecto.imagen_portada.url }}" alt="{{ proyecto.titulo }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

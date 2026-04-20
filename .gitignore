@@ -1,0 +1,20 @@
+# Secretos y configuración sensible
+secrets.json
+
+# Base de datos
+db.sqlite3
+
+# Entorno virtual
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+

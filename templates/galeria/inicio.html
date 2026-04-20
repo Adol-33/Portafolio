@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block titulo %}Inicio — {{ sitio.nombre_sitio }}{% endblock %}
+
+{% block contenido %}
+<!-- HERO estilo Miguel Acosta -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Portafolio</h1>
+        <h2>{{ sitio.nombre_propietario }}</h2>
+        <p>{{ sitio.subtitulo }}</p>
+    </div>
+    {% if sitio.imagen_hero %}
+    <div class="hero-image">
+        <img src="{{ sitio.imagen_hero.url }}" alt="{{ sitio.nombre_propietario }}">
+    </div>
+    {% endif %}
+</section>
+
+<!-- PROYECTOS DESTACADOS -->
+{% if destacados %}
+<section class="seccion-proyectos">
+    <h2>Proyectos</h2>
+    <div class="grid">
+        {% for proyecto in destacados %}
+        <div class="card"
+             hx-get="{% url 'detalle_proyecto' proyecto.slug %}"
+             hx-target="#modal-container"
+             hx-swap="innerHTML">
+            {% if proyecto.imagen_portada %}
+            <img src="{{ proyecto.imagen_portada.url }}" alt="{{ proyecto.titulo }}">
+            {% endif %}
+            <div class="info">
+                <h3>{{ proyecto.titulo }}</h3>
+                <span>{{ proyecto.descripcion|truncatewords:5 }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

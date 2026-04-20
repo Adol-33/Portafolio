@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block titulo %}Sobre Mí — {{ sitio.nombre_sitio }}{% endblock %}
+
+{% block contenido %}
+<section class="seccion-about">
+    {% if sitio.imagen_perfil %}
+    <div class="about-img">
+        <img src="{{ sitio.imagen_perfil.url }}" alt="{{ sitio.nombre_propietario }}">
+    </div>
+    {% endif %}
+    <div class="about-text">
+        <h2>About me</h2>
+        <p>{{ sitio.bio|linebreaksbr }}</p>
+    </div>
+</section>
+{% endblock %}
