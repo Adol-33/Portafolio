@@ -2,7 +2,7 @@
 """
 
 from pathlib import Path
-# import os
+import os
 import json
 
 
@@ -29,7 +29,7 @@ SECRET_KEY = get_secret('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.tropicvisual.com', 'tropicvisual.com']
 
 
 # Application definition
@@ -123,9 +123,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 # archivos estáticos (CSS, JS, imágenes de la app)
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_URL = '/static/'
+# directorio donde Django buscará los archivos estáticos durante el desarrollo
+STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+# directorio donde Django recopilará los archivos estáticos para producción
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
 
 # archivos multimedia (subidos por el usuario)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
