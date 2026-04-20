@@ -6,9 +6,9 @@ import os
 import json
 
 import dj_database_url
-# import whitenoise
-# from dotenv import load_dotenv
-# load_dotenv()
+import whitenoise
+from dotenv import load_dotenv
+load_dotenv()
 
 
 
@@ -91,8 +91,7 @@ WSGI_APPLICATION = 'portafolio.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(default=get_secret('DATABASE_URL', 'sqlite:///db.sqlite3')),
-    # 'default': os.getenv('DATABASE_URL', get_secret('DATABASE_URL', 'sqlite:///db.sqlite3')),
+    'default': dj_database_url.config(default = os.getenv('DATABASE_URL'))
 
 }
 
