@@ -6,7 +6,7 @@ import os
 import json
 
 import dj_database_url
-import whitenoise
+# import whitenoise
 from dotenv import load_dotenv
 load_dotenv()
 
