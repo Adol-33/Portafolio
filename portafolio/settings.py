@@ -6,7 +6,7 @@ import os
 import json
 
 import dj_database_url
-import whitenoise
+# import whitenoise
 
 
 
@@ -146,3 +146,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # archivos multimedia (subidos por el usuario)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+CSRF_TRUSTED_ORIGINS = ['https://www.tropicvisual.com', 'https://tropicvisual.com']
+
+
