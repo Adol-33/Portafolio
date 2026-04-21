@@ -12,12 +12,6 @@ import dj_database_url
 # .env es un archivo de texto que contiene variables de entorno en formato clave=valor
 from dotenv import load_dotenv
 
-# Cloudinary
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-
-
 
 # carga las variables de entorno desde el archivo .env
 load_dotenv()
