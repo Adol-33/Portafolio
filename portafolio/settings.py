@@ -5,18 +5,22 @@ from pathlib import Path
 import os
 import json
 
+# dj_database_url es una librería que permite configurar la base de datos desde una URL
 import dj_database_url
 # import whitenoise
+
+# .env es un archivo de texto que contiene variables de entorno en formato clave=valor
 from dotenv import load_dotenv
+
+# carga las variables de entorno desde el archivo .env
 load_dotenv()
-
-
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-def get_secret(key, default=None):
+# función para obtener las variables secretas desde el archivo secrets.json
+def get_secret(key, default=None) -> str:
     """Get the secret variable or return explicit exception."""
     try:
         with open((BASE_DIR / 'secrets.json'), encoding='utf-8') as f:
@@ -36,6 +40,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", get_secret("SECRET_KEY"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# en producción, debes configurar ALLOWED_HOSTS con los dominios de tu sitio
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.tropicvisual.com', 'tropicvisual.com']
 
 
@@ -48,9 +53,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'whitenoise.runserver_nostatic',
-    'galeria',
-    'django_htmx',
+    'whitenoise.runserver_nostatic', # para usar WhiteNoise durante el desarrollo
+    'galeria', # nuestra app principal
+    'django_htmx', # para usar HTMX en nuestras plantillas
 ]
 
 MIDDLEWARE = [
@@ -88,7 +93,6 @@ WSGI_APPLICATION = 'portafolio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 
 DATABASES = {
     'default': dj_database_url.config(default = os.getenv('DATABASE_URL'))
@@ -147,7 +151,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+# configuraciones de seguridad para producción
 CSRF_TRUSTED_ORIGINS = ['https://www.tropicvisual.com', 'https://tropicvisual.com']
 
 

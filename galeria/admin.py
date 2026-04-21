@@ -31,7 +31,14 @@ class ConfigSitioAdmin(admin.ModelAdmin):
     """Admin para la configuración del sitio (singleton)."""
 
     def has_add_permission(self, request):
+        """ Permitir agregar solo si no existe una instancia de ConfigSitio.
+        Esto asegura que solo haya una configuración del sitio. """
+        # Retorna True solo si no existe ninguna instancia de ConfigSitio,
+        # lo que permite agregar una nueva configuración solo si no hay ninguna existente.
+        # Si ya existe una configuración, no se permitirá agregar otra.
+        # Esto garantiza que la configuración del sitio sea única (singleton).
         return not ConfigSitio.objects.exists()
 
     def has_delete_permission(self, request, obj=None):
+        """ No permitir eliminar la configuración del sitio. """
         return False
