@@ -12,6 +12,13 @@ import dj_database_url
 # .env es un archivo de texto que contiene variables de entorno en formato clave=valor
 from dotenv import load_dotenv
 
+# Cloudinary
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+
+
 # carga las variables de entorno desde el archivo .env
 load_dotenv()
 
@@ -56,6 +63,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic', # para usar WhiteNoise durante el desarrollo
     'galeria', # nuestra app principal
     'django_htmx', # para usar HTMX en nuestras plantillas
+    'django_cloudinary_storage', # para usar Cloudinary como almacenamiento de archivos
 ]
 
 MIDDLEWARE = [
@@ -155,3 +163,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CSRF_TRUSTED_ORIGINS = ['https://www.tropicvisual.com', 'https://tropicvisual.com']
 
 
+
+# Cloudinary configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'django_cloudinary_storage.storage.MediaCloudinaryStorage'
