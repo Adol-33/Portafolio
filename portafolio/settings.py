@@ -46,7 +46,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.tropicvisual.com', 'tropicvisual
 
 
 # Application definition
-
+import sys
+print("PYTHONPATH:", sys.path)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,7 +58,9 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic', # para usar WhiteNoise durante el desarrollo
     'galeria', # nuestra app principal
     'django_htmx', # para usar HTMX en nuestras plantillas
-    'django_cloudinary_storage', # para usar Cloudinary como almacenamiento de archivos
+    'cloudinary_storage', # para usar Cloudinary como almacenamiento de archivos
+    'django.contrib.staticfiles', # para servir archivos estáticos con WhiteNoise
+    'cloudinary', # para usar la API de Cloudinary
 ]
 
 MIDDLEWARE = [
@@ -164,4 +167,4 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
-DEFAULT_FILE_STORAGE = 'django_cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

@@ -1,20 +1,25 @@
-# Secretos y configuración sensible
-secrets.json
-
-# Base de datos
-db.sqlite3
-
-# Entorno virtual
 env/
 
-# Python
-__pycache__/
-*.py[cod]
+_pycache__/
+*.pyc
 *.pyo
-
-# IDE / Editor
-.vscode/
-.idea/
+*.pyd
+__pycache__/
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.egg-info/
+*.log
+*.bak
 *.swp
-*.swo
+.DS_Store
 
+secrets.json
+staticfiles/
+media/
+
+.env
+
+db.sqlite3
