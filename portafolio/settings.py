@@ -46,8 +46,6 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.tropicvisual.com', 'tropicvisual
 
 
 # Application definition
-import sys
-print("PYTHONPATH:", sys.path)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,7 +57,6 @@ INSTALLED_APPS = [
     'galeria', # nuestra app principal
     'django_htmx', # para usar HTMX en nuestras plantillas
     'cloudinary_storage', # para usar Cloudinary como almacenamiento de archivos
-    'django.contrib.staticfiles', # para servir archivos estáticos con WhiteNoise
     'cloudinary', # para usar la API de Cloudinary
 ]
 
